@@ -16,6 +16,7 @@ function EmployeeData() {
       <table>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Number</th>
             <th>Address</th>
