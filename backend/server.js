@@ -15,7 +15,9 @@ connectDB();
 
 // Middleware
 app.use(express.json()); // Parse JSON requests
-app.use(cors()); // Enable CORS
+app.use(cors({
+  origin: 'http://localhost:5173' // Allow requests from frontend port
+})); // Enable CORS
 app.use("/uploads", express.static("uploads")); // Serve uploaded files
 
 // Routes
