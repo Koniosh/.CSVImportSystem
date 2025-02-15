@@ -45,8 +45,7 @@ Size (Small, Medium, Large)
 
 ### webdevtask/frontend/csv-import-ui/src/
 ### components/EmployeeData.jsx: Displays the Employee Data.
-### components/Home.jsx: The landing page with buttons to navigate to the product filter page and 
-  other sections.
+### components/Home.jsx: The landing page with buttons to navigate to the product filter page and  other sections.
 ### components/ImportCSV.jsx: Handles the CSV file upload and parsing.
 ### components/ProductData.jsx: Displays the Product Data.
 ### components/ProductFilter.jsx: Filters and displays products by size (Small, Medium, Large).
