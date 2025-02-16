@@ -8,6 +8,8 @@ const uploadCSV = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
+  res.json({ message: "File uploaded successfully", filename: req.file.originalname });
+
 
   const results = [];
   fs.createReadStream(req.file.path)
@@ -69,7 +71,8 @@ const getEmployees = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const { size } = req.query;
-    const products = size ? await Product.find({ size }) : await Product.find();
+    const products = size ? await Product.find({ size:{ $regex: new RegExp(`^${size}$`, "i") }}) : await Product.find();
+    console.log("Fetched Products:", products);
     res.json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -77,4 +80,6 @@ const getProducts = async (req, res) => {
   }
 };
 
-export { uploadCSV, getEmployees, getProducts };
+
+
+export { uploadCSV, getEmployees, getProducts,  };
