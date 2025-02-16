@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 
 function EmployeeData() {
   const [employees, setEmployees] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get("http://localhost:3000/api/employees").then((res) => {
@@ -10,13 +12,15 @@ function EmployeeData() {
     });
   }, []);
 
+  
+
+
   return (
     <div className="container">
       <h2>👨‍💼 Employee Data</h2>
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Number</th>
             <th>Address</th>
@@ -32,6 +36,9 @@ function EmployeeData() {
           ))}
         </tbody>
       </table>
+      <button onClick={() => navigate("/home")} className="home-button">
+        🏠 Back to Home
+      </button>
     </div>
   );
 }
