@@ -8,8 +8,6 @@ const uploadCSV = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
-  res.json({ message: "File uploaded successfully", filename: req.file.originalname });
-
 
   const results = [];
   fs.createReadStream(req.file.path)
@@ -20,6 +18,8 @@ const uploadCSV = async (req, res) => {
         if (results.length === 0) {
           return res.status(400).json({ message: "CSV file is empty" });
         }
+
+        let responseMessage = "";
 
         if ("flavour" in results[0] && "size" in results[0]) {
           // Product CSV Detected
@@ -32,7 +32,7 @@ const uploadCSV = async (req, res) => {
           }));
 
           await Product.insertMany(formattedProducts);
-          return res.json({ message: "Product CSV Data Imported Successfully" });
+          responseMessage = "Product CSV Data Imported Successfully";
 
         } else if ("NUMBER" in results[0] && "NAME" in results[0]) {
           // Employee CSV Detected
@@ -44,16 +44,26 @@ const uploadCSV = async (req, res) => {
           }));
 
           await Employee.insertMany(formattedEmployees);
-          return res.json({ message: "Employee CSV Data Imported Successfully" });
+          responseMessage = "Employee CSV Data Imported Successfully";
 
         } else {
           return res.status(400).json({ message: "Invalid CSV format" });
         }
+
+        // Send the response after processing
+        if (!res.headersSent) {
+          res.json({ message: responseMessage });
+        }
+
       } catch (error) {
         console.error("Error inserting data:", error);
-        res.status(500).json({ message: "Server error while processing CSV" });
+        if (!res.headersSent) {
+          res.status(500).json({ message: "Server error while processing CSV" });
+        }
       }
     });
+
+  // Do not send an early response here, wait for CSV processing
 };
 
 // Get Employees
@@ -71,7 +81,7 @@ const getEmployees = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const { size } = req.query;
-    const products = size ? await Product.find({ size:{ $regex: new RegExp(`^${size}$`, "i") }}) : await Product.find();
+    const products = size ? await Product.find({ size: { $regex: new RegExp(`^${size}$`, "i") } }) : await Product.find();
     console.log("Fetched Products:", products);
     res.json(products);
   } catch (error) {
@@ -80,6 +90,4 @@ const getProducts = async (req, res) => {
   }
 };
 
-
-
-export { uploadCSV, getEmployees, getProducts,  };
+export { uploadCSV, getEmployees, getProducts };
