@@ -1,6 +1,7 @@
 import express from "express";
 import { uploadCSV, getEmployees, getProducts } from "./controllers.js";
 import { upload } from "./middleware.js";
+import Product from "./models/Product.js";
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get("/products", getProducts);
 // Get a single product by ID
 router.get("/products/:id", async (req, res) => {
   try {
-    const product = await getProducts.findOne({ id: req.params.id });
+    const product = await Product.findOne({ id: req.params.id });
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
