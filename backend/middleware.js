@@ -14,14 +14,7 @@ const errorHandler = (err, req, res, next) => {
 };
 
 // Multer Storage Configuration (Saves File With Original Name)
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Uploads go to the "uploads" folder
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
-  },
-});
+const storage = multer.memoryStorage();
 
 // Multer File Upload Middleware (Restrict to CSV files & Limit Size)
 const upload = multer({
