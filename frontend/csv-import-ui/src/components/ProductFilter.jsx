@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Papa from "papaparse";
+import './productfilterStyle.css';
 
 function ProductFilter() {
   const [products, setProducts] = useState([]);
@@ -39,7 +40,7 @@ function ProductFilter() {
 
 
   return (
-    <div className="container">
+    <div className="filter-container">
       <h2>🔍 Filter Products by Size</h2>
       <select onChange={handleSizeChange} value={size}>
         <option value="small">Small</option>
@@ -53,7 +54,7 @@ function ProductFilter() {
           </li>
         ))}
       </ul>
-      <button onClick={() => navigate("/home")} className="home-button">
+      <button onClick={() => navigate("/home")} className="home-button3">
         🏠 Back to Home
       </button>
     </div>
