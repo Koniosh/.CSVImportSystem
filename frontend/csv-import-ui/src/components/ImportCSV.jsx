@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./importStyle.css";
+
 
 function ImportCSV() {
   const [data, setData] = useState([]);
@@ -33,39 +35,6 @@ function ImportCSV() {
       skipEmptyLines: true, // Ignore empty rows
     });
   };
-
-  // Upload parsed data to backend
-  // const handleUpload = async () => {
-  //   if (!file) {
-  //     setMessage("⚠️ Please upload the file first!");
-  //     return;
-  //   }
-
-  //   if (data.length === 0) {
-  //     setMessage("⚠️ No data to upload!");
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   const formData = new FormData();
-  //   formData.append("csvFile", file); // Append the selected file
-
-  //   try {
-  //     const response = await axios.post("http://localhost:3000/api/upload", formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     });
-
-  //     setMessage("✅ Data uploaded successfully!");
-  //     console.log("Upload successful:", response.data);
-  //   } catch (error) {
-  //     setMessage("❌ Upload failed! Please try again.");
-  //     console.error("Upload Error:", error.response?.data || error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleUpload = async () => {
     if (!file) {
       setMessage("⚠️ Please select a file to upload.");
@@ -82,10 +51,10 @@ function ImportCSV() {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
-      setMessage(`✅ ${response.data.message}`); // Show success message
+      setMessage(` ${response.data.message}`); // Show success message
       setData([]); // Clear preview data after upload
     } catch (error) {
-      setMessage("❌ Upload failed! Please try again.");
+      setMessage(" Upload failed! Please try again.");
       console.error("Upload Error:", error);
     } finally {
       setLoading(false); // Hide loading indicator
@@ -93,7 +62,7 @@ function ImportCSV() {
   };
   
   return (
-    <div className="container">
+    <div className="import-container">
       <h2>📤 Import CSV Data</h2>
       <input type="file" accept=".csv" onChange={handleFileChange} />
       <button onClick={handleParse} disabled={!file || loading}>
@@ -125,13 +94,13 @@ function ImportCSV() {
           </tbody>
         </table>
       )}
-     <br/><br/> <button onClick={() => navigate("/home")} className="home-button">
+     <br/><br/> <button onClick={() => navigate("/home")} className="home-buttons">
       🏠 Back to Home
      </button>
-     <button onClick={() => navigate("/employees")} className="home-button">
+     <button onClick={() => navigate("/employees")} className="home-buttons">
       🏠 Back to Employee Data
      </button>
-     <button onClick={() => navigate("/products")} className="home-button">
+     <button onClick={() => navigate("/products")} className="home-buttons">
       🏠 Back to Product Data
      </button>
     </div>
