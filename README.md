@@ -1,4 +1,4 @@
-# Web Development Internship Task
+# Web Development Project
 
 **Note**: Styling and hosting have not been implemented, but I am aware of how to implement both. The frontend can be styled using CSS or libraries like Bootstrap, and the project can be hosted using platforms like Vercel for the frontend and Render for the backend.
 Still the implemented code is responsive...
