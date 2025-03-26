@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "../styles.css"; // Import CSS for styling
+import "./style.css"; // Import CSS for styling
 import React from "react";
 
 
@@ -8,12 +8,9 @@ function Welcome() {
 
   return (
     <div className="welcome-container">
-      <div className="overlay"></div>
-      <div className="content">
-        <h1>🚀CSV Import System</h1>
+        <h1 className="text-wrapper" data-Text="CSV Import System">CSV Import System</h1>
         
-        <button onClick={() => navigate("/home")}>🚀 Get Started</button>
-      </div>
+        <button onClick={() => navigate("/home")} className="btn"> Get Started ➔</button>
     </div>
   );
 }
