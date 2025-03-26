@@ -1,5 +1,5 @@
-import fs from "fs";
 import csvParser from "csv-parser";
+import { Readable } from "stream";
 import Employee from "./models/Employee.js";
 import Product from "./models/Product.js";
 
@@ -10,7 +10,11 @@ const uploadCSV = async (req, res) => {
   }
 
   const results = [];
-  fs.createReadStream(req.file.path)
+  
+  // Convert the file buffer to a readable stream
+  const stream = Readable.from(req.file.buffer.toString());
+
+  stream
     .pipe(csvParser())
     .on("data", (data) => results.push(data))
     .on("end", async () => {
@@ -51,19 +55,13 @@ const uploadCSV = async (req, res) => {
         }
 
         // Send the response after processing
-        if (!res.headersSent) {
-          res.json({ message: responseMessage });
-        }
+        res.json({ message: responseMessage });
 
       } catch (error) {
         console.error("Error inserting data:", error);
-        if (!res.headersSent) {
-          res.status(500).json({ message: "Server error while processing CSV" });
-        }
+        res.status(500).json({ message: "Server error while processing CSV" });
       }
     });
-
-  // Do not send an early response here, wait for CSV processing
 };
 
 // Get Employees
