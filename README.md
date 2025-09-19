@@ -1,7 +1,5 @@
 # Web Development Project
 
-**Note**: Styling and hosting have not been implemented, but I am aware of how to implement both. The frontend can be styled using CSS or libraries like Bootstrap, and the project can be hosted using platforms like Vercel for the frontend and Render for the backend.
-Still the implemented code is responsive...
 ## Task Overview
 
 The goal of this task is to create a frontend UI that allows users to import data from a CSV file, save it in a suitable format (e.g., database or JSON), and display it on the screen. The product manages two types of data:
