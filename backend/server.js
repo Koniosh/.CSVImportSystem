@@ -13,8 +13,7 @@ const corsOptions = {
   origin: [
     "http://localhost:5173",
     "http://localhost:4173",
-    "https://csv-import-system.netlify.app", // Your Netlify URL (we'll get this after deployment)
-    // Add your actual Netlify URL here after deployment
+    "https://csv-import-system.netlify.app/",
   ],
   credentials: true,
   optionsSuccessStatus: 200,
