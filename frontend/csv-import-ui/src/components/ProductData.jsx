@@ -2,30 +2,32 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./productStyle.css";
+import { API_URL } from "../config"; // Add this import
 
 function ProductData() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/products").then((res) => {
+    axios.get(`${API_URL}/api/products`).then((res) => {
+      // Updated
       setProducts(res.data);
     });
   }, []);
 
-  // Delete product function
   const deleteProduct = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`/api/products/${id}`);
-      setProducts(products.filter(product => product._id !== id)); // Update state
+      await axios.delete(`${API_URL}/api/products/${id}`); // Updated
+      setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
     }
   };
-
 
   return (
     <div className="product-container">
@@ -49,14 +51,18 @@ function ProductData() {
               <td>{prod.flavour}</td>
               <td>{prod.size}</td>
               <td>
-                <button className="delete-btn" onClick={() => deleteProduct(prod._id)}>Delete</button>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteProduct(prod._id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Always show the "Back to Home" button below the table */}
       <button onClick={() => navigate("/home")} className="home-button2">
         🏠 Back to Home
       </button>

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./employeeStyle.css";
+import { API_URL } from "../config"; // Add this import
 
 function EmployeeData() {
   const [employees, setEmployees] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/employees").then((res) => {
+    axios.get(`${API_URL}/api/employees`).then((res) => {
+      // Updated
       setEmployees(res.data);
     });
   }, []);
@@ -20,8 +22,8 @@ function EmployeeData() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3000/api/employees/${id}`);
-      setEmployees(employees.filter((emp) => emp._id !== id)); // Remove from frontend state
+      await axios.delete(`${API_URL}/api/employees/${id}`); // Updated
+      setEmployees(employees.filter((emp) => emp._id !== id));
     } catch (error) {
       console.error("Error deleting employee:", error);
     }

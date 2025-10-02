@@ -9,6 +9,16 @@ dotenv.config();
 const app = express();
 
 // Middleware
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:4173",
+    "https://csv-import-system.netlify.app", // Your Netlify URL (we'll get this after deployment)
+    // Add your actual Netlify URL here after deployment
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
 app.use(cors());
 app.use(express.json());
 
