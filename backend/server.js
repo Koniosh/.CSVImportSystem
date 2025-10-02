@@ -4,16 +4,17 @@ import dotenv from "dotenv";
 import connectDB from "./config.js";
 import uploadRoutes from "./routes.js";
 
-
 dotenv.config();
 const app = express();
 connectDB();
 
 // Middleware
 app.use(express.json()); // Parse JSON requests
-app.use(cors({
-  origin: 'http://localhost:5173' // Allow requests from frontend port
-})); // Enable CORS
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow requests from frontend port
+  })
+); // Enable CORS
 app.use("/uploads", express.static("uploads")); // Serve uploaded files
 
 // Routes
@@ -32,4 +33,10 @@ app.use((err, req, res, next) => {
 
 // Start Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+
+export default app;
