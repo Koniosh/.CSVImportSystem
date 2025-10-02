@@ -20,9 +20,17 @@ if (mongoose.connection.readyState === 0) {
     .catch((err) => console.error("MongoDB connection error:", err));
 }
 
-// Routes
+// Add this route before your other routes
 app.get("/", (req, res) => {
-  res.json({ message: "CSV Import System API is running!" });
+  res.json({
+    message: "CSV Import System API",
+    status: "Running",
+    endpoints: {
+      test: "/api/test",
+      upload: "/api/csv/upload",
+      data: "/api/csv/data",
+    },
+  });
 });
 
 app.use("/api/csv", csvRoutes);
