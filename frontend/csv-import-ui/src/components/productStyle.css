@@ -1,0 +1,89 @@
+.product-container {
+    margin: 40px auto;
+    padding: 20px;
+    width: 80%;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #444;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #229ec7;
+    color: white;
+    font-weight: bold;
+  }
+  
+  td {
+    background-color: #ffffff;
+    color: #333;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #229ec7;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    margin-left: 10px;
+  }
+  
+  .delete-btn:hover {
+    background-color: #b52a37;
+  }
+  
+  .home-button2 {
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #099ca6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .home-button2:hover {
+    background-color: #099ca6;
+  }

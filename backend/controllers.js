@@ -1,5 +1,5 @@
-import fs from "fs";
 import csvParser from "csv-parser";
+import { Readable } from "stream";
 import Employee from "./models/Employee.js";
 import Product from "./models/Product.js";
 
@@ -10,7 +10,11 @@ const uploadCSV = async (req, res) => {
   }
 
   const results = [];
-  fs.createReadStream(req.file.path)
+  
+  // Convert the file buffer to a readable stream
+  const stream = Readable.from(req.file.buffer.toString());
+
+  stream
     .pipe(csvParser())
     .on("data", (data) => results.push(data))
     .on("end", async () => {
@@ -18,6 +22,8 @@ const uploadCSV = async (req, res) => {
         if (results.length === 0) {
           return res.status(400).json({ message: "CSV file is empty" });
         }
+
+        let responseMessage = "";
 
         if ("flavour" in results[0] && "size" in results[0]) {
           // Product CSV Detected
@@ -30,7 +36,7 @@ const uploadCSV = async (req, res) => {
           }));
 
           await Product.insertMany(formattedProducts);
-          return res.json({ message: "Product CSV Data Imported Successfully" });
+          responseMessage = "Product CSV Data Imported Successfully";
 
         } else if ("NUMBER" in results[0] && "NAME" in results[0]) {
           // Employee CSV Detected
@@ -42,11 +48,15 @@ const uploadCSV = async (req, res) => {
           }));
 
           await Employee.insertMany(formattedEmployees);
-          return res.json({ message: "Employee CSV Data Imported Successfully" });
+          responseMessage = "Employee CSV Data Imported Successfully";
 
         } else {
           return res.status(400).json({ message: "Invalid CSV format" });
         }
+
+        // Send the response after processing
+        res.json({ message: responseMessage });
+
       } catch (error) {
         console.error("Error inserting data:", error);
         res.status(500).json({ message: "Server error while processing CSV" });
@@ -69,7 +79,8 @@ const getEmployees = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const { size } = req.query;
-    const products = size ? await Product.find({ size }) : await Product.find();
+    const products = size ? await Product.find({ size: { $regex: new RegExp(`^${size}$`, "i") } }) : await Product.find();
+    console.log("Fetched Products:", products);
     res.json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
