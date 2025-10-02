@@ -4,13 +4,9 @@ import dotenv from "dotenv";
 import connectDB from "./config.js";
 import uploadRoutes from "./routes.js";
 
-// Load environment variables
+
 dotenv.config();
-
-// Initialize Express app
 const app = express();
-
-// Connect to MongoDB
 connectDB();
 
 // Middleware
